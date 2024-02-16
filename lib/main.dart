@@ -1,6 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  if(kIsWeb){
+    await Firebase.initializedApp(options: FirebaseOptions(apiKey: "AIzaSyB5OQR_tJh3eb-ACcAxxgxEyvty0EZy7ok", appId: "1:112371686236:web:4829b191704875fce87f99", messagingSenderId: "112371686236", projectId: "feedies" ));
+  }
+
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
