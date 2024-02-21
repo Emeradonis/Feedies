@@ -1,5 +1,8 @@
-import 'package:edujad_app/Features/User_authen/Presentation/Pages/Create%20an%20account.dart';
-import 'package:edujad_app/Features/User_authen/Presentation/Pages/Sign%20in.dart';
+
+import 'package:edujad_app/Features/App/Splash_Screen/Splash.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signin.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signup.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/User_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,27 +20,32 @@ Future main() async{
   }
 
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class User {
-  final String username;
-  final String email;
 
-  User({required this.username, required this.email});
-}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FirstPage(),
+      title: 'Flutter Firebase',
+      routes: {
+        '/': (context) => const SplashScreen(
+          // Here, you can decide whether to show the LoginPage or HomePage based on user authentication
+          child: SignInPage(),
+        ),
+        '/home': (context) => FirstPage(),
+        '/login': (context) => SignInPage(),
+        '/signUp': (context) => CreateAccountPage(),
+        '/user': (context) => UserAccountPage(username: AutofillHints.username, email: AutofillHints.email,),
+      },
     );
   }
 }
+
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
@@ -84,38 +92,69 @@ class FirstPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold)
             ),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate to the create account page
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the sign-in page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CreateAccountPage()),
-                  );
+                    MaterialPageRoute(builder: (context) => const CreateAccountPage()),);
                 },
-                child: const Text('Create Account'),
+                child: Container(
+                  width: 285,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text('Create an account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,),
+                    ),
+                  ),
+                ),
               ),
             const SizedBox(height: 15),
             const Text(
                 'already have an account?',
-                style: TextStyle(fontSize: 13,),
+                style: TextStyle(fontSize: 13.5,
+                fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 3),
-              ElevatedButton(
-                onPressed: () {
+
+              GestureDetector(
+                  onTap: () {
                 // Navigate to the sign-in page
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignInPage()),
-                );
+                  MaterialPageRoute(builder: (context) => const SignInPage()),);
               },
-                child: const Text('Sign In'),
+                child: Container(
+                  width: 285,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                child: const Center(
+                  child: Text('Sign In',
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,),
+                  ),
+                ),
+              ),
+              ),
+             ],
             ),
-          ],
         ),
-      ),
-    ),);
+        ),
+      );
   }
+
 }
+
 
 
 
