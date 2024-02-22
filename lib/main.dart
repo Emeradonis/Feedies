@@ -1,7 +1,9 @@
 
 import 'package:edujad_app/Features/App/Splash_Screen/Splash.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/Rec.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signin.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signup.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/Test.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/User_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Firebase',
+      title: 'Feedies',
       routes: {
         '/': (context) => const SplashScreen(
           // Here, you can decide whether to show the LoginPage or HomePage based on user authentication
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => FirstPage(),
         '/login': (context) => SignInPage(),
         '/signUp': (context) => CreateAccountPage(),
-        '/user': (context) => UserAccountPage(username: AutofillHints.username, email: AutofillHints.email,),
+        '/user': (context) => UserAccountPage(username: AutofillHints.username, email: AutofillHints.email),
+        '/test': (context) => test(),
+        '/rec' : (context) => rec()
       },
     );
   }

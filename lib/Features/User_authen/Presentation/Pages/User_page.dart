@@ -1,10 +1,11 @@
 
-import 'package:edujad_app/Global/Common/Toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class UserAccountPage extends StatelessWidget {
+
   final String username;
   final String email;
 
@@ -21,10 +22,41 @@ class UserAccountPage extends StatelessWidget {
         ),
       ),
       body: Center(
+        child: Container(
+          height: 420,
+          width: 320,
+          decoration: BoxDecoration(
+          color: Colors.grey, // Set the background color
+          borderRadius: BorderRadius.circular(10), // Set border radius
+          border: Border.all(
+          color: Colors.black, // Set border color
+          width: 0.25, // Set border width
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+      ],),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Welcome back $username'),
+            const Text('Welcome to Feedies!',
+            style: TextStyle(fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+            ),
+            const SizedBox(height: 5),
+            const Center(
+              child: SizedBox(
+                width: 285,
+                child: Text('To get advice on how to improve your English, you need first to take a test',
+                  style: TextStyle(
+                  fontSize: 15,
+              ),),
+            ),),
             const SizedBox(height: 20),
           SizedBox(
             child: Container(
@@ -36,6 +68,7 @@ class UserAccountPage extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
+                  Navigator.pushNamed(context, '/test');
                 },
                 child: const Center(
                   child: Text('Take the Test',
@@ -59,7 +92,9 @@ class UserAccountPage extends StatelessWidget {
                     onTap: () {
                       FirebaseAuth.instance.signOut();
                       Navigator.pushNamed(context, "/login");
-                      showToast(message: "Successfully signed out");
+                      Fluttertoast.showToast(msg: "Successfully signed out",
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 3);
                   // Implement logic for taking the test
                 },
                   child: const Center(
@@ -74,7 +109,7 @@ class UserAccountPage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
   }
 
 }

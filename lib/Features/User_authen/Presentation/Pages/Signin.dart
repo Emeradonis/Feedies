@@ -5,6 +5,7 @@ import 'package:edujad_app/Global/Common/Toast.dart';
 import 'package:edujad_app/firebase_auth_implement/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -198,13 +199,17 @@ class _LoginPageState extends State<SignInPage> {
     });
 
     if (user != null) {
-      showToast(message: 'User is successfully signed in');
+      Fluttertoast.showToast(msg: 'Successfully signed in',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 3);
       Navigator.pushNamed(context, "/user");
     } else {
-      showToast(message: "some error occured");
+      Fluttertoast.showToast(msg: "Incorrect Email or Password ",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 3);
     }
   }
-  _signInWithGoogle()async{
+  _signInWithGoogle() async{
 
     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -227,7 +232,9 @@ class _LoginPageState extends State<SignInPage> {
 
     }
     catch(e) {
-      showToast(message: "some error occured $e");
+      Fluttertoast.showToast(msg: "some error occured $e",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 3);
     }
 
 

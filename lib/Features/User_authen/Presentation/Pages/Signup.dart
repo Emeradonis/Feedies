@@ -1,9 +1,9 @@
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signin.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Widgets/Form_container_widgets.dart';
-import 'package:edujad_app/Global/Common/Toast.dart';
 import 'package:edujad_app/firebase_auth_implement/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -165,10 +165,14 @@ setState(() {
     isSigningUp = false;
 });
   if (user != null) {
-    showToast(message: "User is successfully created");
+    Fluttertoast.showToast(msg: "Account successfully created",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 3);
     Navigator.pushNamed(context, "/login");
   } else {
-    showToast(message: "Some error happend");
+    Fluttertoast.showToast(msg: "Email already in use",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 3);
   }
 }
 }
