@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^2.25.4
+  file_picker: ^4.0.0
+  audioplayers: ^0.20.1
 
 
   # The following adds the Cupertino Icons font to your application.

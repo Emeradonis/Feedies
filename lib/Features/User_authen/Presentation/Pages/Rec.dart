@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class rec extends StatefulWidget {
   const rec({super.key});
@@ -8,6 +10,19 @@ class rec extends StatefulWidget {
 }
 
 class _testState extends State<rec> {
+  AudioPlayer audioPlayer = AudioPlayer();
+
+
+  void pickFile() async {
+    String? filePath = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['wav'],
+    ).then((value) => value!.files.single.path);
+
+    if (filePath != null) {
+      playAudio(filePath);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,27 +73,46 @@ class _testState extends State<rec> {
                   ),
                 ),
                 const SizedBox(height: 45),
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to the sign-in page
-                    Navigator.pushNamed(
-                        context, '/user');
-                  },
-                  child: Container(
-                    width: 285,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text('Start Recording',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: pickFile,
+                      child: Container( // Add a Container here
+                        width: 140,
+                        height: 49,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Row(
+                          children: <Widget>[
+                            SizedBox(width: 5),
+                            Icon(Icons.attach_file, color: Colors.black),
+                            SizedBox(width: 10),
+                            Text('Upload a File',
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                        ),
                       ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        // On hold = start recording
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(left:8),
+                        width: 54,
+                        height: 54,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.mic, color: Colors.black, size: 30),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -100,5 +134,12 @@ class _testState extends State<rec> {
         ),
       ),
     );
+  }
+
+  void playAudio(String filePath) async {
+    int result = await audioPlayer.play(filePath, isLocal: true);
+    if (result == 1) {
+      print('Audio playing');
+    }
   }
 }
