@@ -1,10 +1,11 @@
 
-import 'package:edujad_app/Features/App/Splash_Screen/Splash.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Rec.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/Rec2.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signin.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Signup.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/Test.dart';
 import 'package:edujad_app/Features/User_authen/Presentation/Pages/User_page.dart';
+import 'package:edujad_app/Features/User_authen/Presentation/Pages/feed.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -35,16 +36,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Feedies',
       routes: {
-        '/': (context) => const SplashScreen(
-          // Here, you can decide whether to show the LoginPage or HomePage based on user authentication
-          child: SignInPage(),
-        ),
+        '/': (context) => SignInPage(),
         '/home': (context) => FirstPage(),
         '/login': (context) => SignInPage(),
         '/signUp': (context) => CreateAccountPage(),
-        '/user': (context) => UserAccountPage(username: AutofillHints.username, email: AutofillHints.email),
+        '/user': (context) => UserAccountPage(username: '', email: '',),
         '/test': (context) => test(),
-        '/rec' : (context) => rec()
+        '/rec' : (context) => rec(),
+        '/rec2' : (context) => rec2(),
+        '/feed' : (context) => feed(username: '', email: ''),
       },
     );
   }

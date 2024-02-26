@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class rec extends StatefulWidget {
-  const rec({super.key});
+class rec2 extends StatefulWidget {
+  const rec2({super.key});
 
   @override
-  State<rec> createState() => _testState();
+  State<rec2> createState() => _testState();
 }
 
-class _testState extends State<rec> {
+class _testState extends State<rec2> {
   AudioPlayer audioPlayer = AudioPlayer();
 
 
@@ -62,13 +62,13 @@ class _testState extends State<rec> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const Text(
-                  'The second part',
+                  'The Third part',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(
                   width: 285,
-                  child: Text('In the second part you would have to record yourself talking for no more than 45 seconds. It is NOT advisable to read from an already witten text. Be comfortable and sit in quiet place, when recording your audio, so that your voice could be heard loud and clear. And Upload your Audio Now',
+                  child: Text('In the third part, as in the previous part, you would have to record yourself again talking for no more than 45 seconds. It is NOT advisable to read from an already witten text. Be comfortable and sit in quiet place, so that your voice could be heard loud and clear. Upload you Audio NOW',
                       style: TextStyle(fontSize: 15)
                   ),
                 ),
@@ -89,11 +89,11 @@ class _testState extends State<rec> {
                           children: <Widget>[
                             SizedBox(width: 80),
                             Icon(Icons.attach_file, color: Colors.black),
-                              SizedBox(width: 5),
-                              Text('Upload a File',
-                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                              ),
-                        ],
+                            SizedBox(width: 5),
+                            Text('Upload a File',
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -106,7 +106,7 @@ class _testState extends State<rec> {
                     ElevatedButton.icon(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, '/test');
+                            context, '/rec');
                       },
                       style: ElevatedButton.styleFrom(fixedSize: const Size(127, 30)),
                       icon: const Icon(Icons.arrow_back),
@@ -115,11 +115,11 @@ class _testState extends State<rec> {
                     ElevatedButton.icon(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, '/rec2');
+                            context, '/feed');
                         // Add your onPressed function here
                       },
                       style: ElevatedButton.styleFrom(fixedSize: const Size(127, 30)),
-                      label: const Text('Next'),
+                      label: const Text('Finish'),
                       icon: const Icon(Icons.arrow_forward),
                     ),
                   ],

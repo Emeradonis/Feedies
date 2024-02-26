@@ -1,9 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 
+void navigateToUserProfile(BuildContext context, String userId) {
+  Navigator.pushNamed(context, '/profile/$userId');
+}
 class UserAccountPage extends StatelessWidget {
 
   final String username;
@@ -43,12 +47,44 @@ class UserAccountPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Welcome to Feedies!',
+            Text('Welcome to Feedies $username!',
             style: TextStyle(fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
             ),
             const SizedBox(height: 5),
+            //StreamBuilder<List<UserModel>>(
+              //  stream: _readData(username),
+                //builder: (context, snapshot) {
+                 // if(snapshot.connectionState == ConnectionState.waiting){
+                   // return Center(child: CircularProgressIndicator(),);
+                  //}
+                  //if (snapshot.hasError) {
+                    //return Center(child: Text("Error: ${snapshot.error}"));
+                  //}
+                  //if(snapshot.data == null || snapshot.data!.isEmpty){
+                    //return Center(child:Text("No Data Yet"));
+                  //}
+                 // final users = snapshot.data;
+      // return Padding(padding: EdgeInsets.all(8),
+    // child: Column(
+            // children: users!.map((user) {
+      // return ListTile(
+    // leading: GestureDetector(
+    // onTap: (){
+    // _deleteData(user.id!);},child: Icon(Icons.delete),
+      //),
+    // trailing: GestureDetector(onTap: (){_updateData(
+    // UserModel(
+    // id: user.id,
+    // username: "John Wick",
+      // adress: "Pakistan",));
+    // },
+    // child: Icon(Icons.update),
+      // ),title: Text(user.username ?? ''),
+      // subtitle: Text(user.adress ?? ''),);
+    // }).toList()
+    // ),);}),
             const Center(
               child: SizedBox(
                 width: 285,
@@ -112,5 +148,78 @@ class UserAccountPage extends StatelessWidget {
     ),);
   }
 
+}
+
+Stream<List<UserModel>> _readData(String username) {
+  final userCollection = FirebaseFirestore.instance.collection("users");
+
+  return userCollection.where('username', isEqualTo: username).snapshots().map((querySnapshot) =>
+      querySnapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).toList());
+}
+
+void _createData(UserModel userModel) {
+  final userCollection = FirebaseFirestore.instance.collection("users");
+
+  String id = userCollection.doc().id;
+
+  final newUser = UserModel(
+    username: userModel.username,
+    age: userModel.age,
+    adress: userModel.adress,
+    id: id,
+  ).toJson();
+
+  userCollection.doc(id).set(newUser);
+}
+
+void _updateData(UserModel userModel) {
+  final userCollection = FirebaseFirestore.instance.collection("users");
+
+  final newData = UserModel(
+    username: userModel.username,
+    id: userModel.id,
+    adress: userModel.adress,
+    age: userModel.age,
+  ).toJson();
+
+  userCollection.doc(userModel.id).update(newData);
+
+}
+
+void _deleteData(String id) {
+  final userCollection = FirebaseFirestore.instance.collection("users");
+
+  userCollection.doc(id).delete();
+
+}
+
+
+
+class UserModel{
+  final String? username;
+  final String? adress;
+  final int? age;
+  final String? id;
+
+  UserModel({this.id,this.username, this.adress, this.age});
+
+
+  static UserModel fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot){
+    return UserModel(
+      username: snapshot['username'],
+      age: snapshot['age'],
+      id: snapshot['id'],
+      adress: snapshot['adress'],
+    );
+  }
+
+  Map<String, dynamic> toJson(){
+    return {
+      "username": username,
+      "age": age,
+      "id": id,
+      "adress": adress,
+    };
+  }
 }
 
